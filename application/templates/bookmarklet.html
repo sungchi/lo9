@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}북마클릿 :: Inspire Log{% endblock %}
+{% block content %}
+<h2 class="bookmarklet"><a href="javascript:window.open('http://www.lo9.kr/post?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title))">lo9 북마클릿</a></h2>
+<p>위의 링크를 북마크바에 드래그 하거나(데스크탑 브라우저) 아래 텍스트를 즐겨찾기 주소에 직접 입력해주세요.(스마트폰 브라우저) 아이폰에서는 현재 페이지를 북마크 한 다음 편집을 통해 주소부분에 북마클릿 소스를 넣어야합니다.</p>
+<textarea class="bookmarklet-area">
+javascript:window.open('http://www.lo9.kr/post?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title))
+</textarea>
+{% endblock %}

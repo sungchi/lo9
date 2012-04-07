@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul class="link-list">
+    {% for article in news %}
+        <li>
+            <p class="title"><a href="http://{{ host }}/{{ article.key.id() }}">{{ article.title }}</a> <a target="_blank" href="http://{{ host }}/{{ article.key.id() }}">→</a></p>
+            <p class="info">{% set net = article.url|netloc %}<img src="https://s2.googleusercontent.com/s2/favicons?domain={{ net }}" /><span class="netloc"> {{ net }} ·</span> <span class="date">{{ article.post_time|date }} · </span>읽음 {{ article.view }} · <a href="http://www.{{ host }}/{{ article.key.id() }}/c#disqus_thread">댓글</a> · <a target="_blank" href="https://twitter.com/share?text={{ article.title }} http://{{ host }}/{{ article.key.id() }} 코멘트: http://{{ host }}/{{ article.key.id() }}/c&url=">트위터로↑</a> · <a target="_blank" href="http://www.facebook.com/sharer.php?u=http://{{ host }}/{{ article.key.id() }}">페이스북으로↑</a></p>
+        </li>
+    {% else %}
+        <li>
+            <p class="title">글이 없다.</p>
+        </li>
+    {% endfor %}
+</ul>
+{% if page %}
+<a href="/page/{{page}}">다음페이지</a>
+{% endif %}
+{% endblock %}
+
+{% block tail_script %}
+<script type="text/javascript">
+    var disqus_shortname = 'lo9'; 
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }} :: Inspire Log{% endblock %}
+{% block content %}
+<ul class="link-list">
+        <li>
+            <p class="title"><a href="{{ host }}/{{ article.key.id() }}">{{ article.title }}</a> <a target="_blank" href="{{ host }}/{{ article.key.id() }}">→</a></p>
+            <p class="info">{% set net = article.url|netloc %}<img src="https://s2.googleusercontent.com/s2/favicons?domain={{ net }}" /><span class="netloc"> {{ net }} ·</span> <span class="date">{{ article.post_time|date }} · </span>읽음 {{ article.view }} · <a target="_blank" href="https://twitter.com/share?text={{ article.title }} {{ host }}/{{ article.key.id() }} 코멘트: {{ host }}/c/{{ article.key.id() }}&url=">트위터로↑</a> · <a target="_blank" href="http://www.facebook.com/sharer.php?u={{ host }}/{{ article.key.id() }}">페이스북으로↑</a></p>
+        </li>
+</ul>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'lo9'; 
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+{% endblock %}

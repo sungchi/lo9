@@ -1,0 +1,5 @@
+.DS_Store
+*.bak
+*.swp
+*.pyc
+secret_keys.py
