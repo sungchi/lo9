@@ -18,8 +18,27 @@ from application.settings import HOST
 from urlparse import urlparse
 import logging
 from google.appengine.ext import ndb
+from datetime import datetime
 
 PAGESIZE = 25
+
+@app.template_filter()
+def timesince(dt, default="방금"):
+    now = datetime.utcnow()
+    diff = now - dt 
+    periods = (
+        (diff.days / 365, "년"),
+        (diff.days / 30, "월"),
+        (diff.days / 7, "주"),
+        (diff.days, "일"),
+        (diff.seconds / 3600, "시간"),
+        (diff.seconds / 60, "분"),
+        (diff.seconds, "초"),
+    )
+    for period, singular in periods:
+        if period:
+            return "%d%s 전" % (period, singular)
+    return default
 
 @app.template_filter('date')
 def date(s):
