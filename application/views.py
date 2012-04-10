@@ -50,13 +50,13 @@ def netloc(s):
 
 @ndb.toplevel
 def redirect_url(post_id):
-    news = News.query(News.key == ndb.Key("News",post_id)).get()
+    news = ndb.Key("News",post_id).get()
     news.view +=1
     news.put_async()
     return redirect(news.url)
 
 def comment(post_id):
-    news = News.query(News.key == ndb.Key("News",post_id)).get()
+    news = ndb.Key("News",post_id).get()
     return render_template('comment.html',article=news)
 
 @app.route('/', defaults={'page': 1})
@@ -96,7 +96,7 @@ def admin(page):
     return render_template('admin.html',news=news, page=more and page+1 or 0, host=HOST)    
 
 def hot(post_id):
-    news = News.query(News.key == ndb.Key("News",post_id)).get()
+    news = ndb.Key("News",post_id).get()
     news.hot = (news.hot and [False] or [True])[0]
     news.put()
     return ''
