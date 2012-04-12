@@ -19,6 +19,7 @@ from urlparse import urlparse
 import logging
 from google.appengine.ext import ndb
 from datetime import datetime
+from urllib import quote
 
 PAGESIZE = 25
 
@@ -47,6 +48,11 @@ def date(s):
 @app.template_filter('netloc')
 def netloc(s):
     return urlparse(s).netloc
+
+@app.template_filter('url')
+def url(s):
+    logging.debug(s)
+    return quote(s.encode('utf8'))
 
 @ndb.toplevel
 def redirect_url(post_id):

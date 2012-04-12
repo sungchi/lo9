@@ -4,7 +4,7 @@
 <ul class="link-list">
         <li>
             <p class="title"><a href="{{ host }}/{{ article.key.id() }}">{{ article.title }}</a> <a target="_blank" href="{{ host }}/{{ article.key.id() }}">→</a></p>
-            <p class="info">{% set net = article.url|netloc %}<img src="https://s2.googleusercontent.com/s2/favicons?domain={{ net }}" /><span class="netloc"> {{ net }} ·</span> <span class="date">{{ article.post_time|timesince }} · </span>읽음 {{ article.view }} · <a target="_blank" href="https://twitter.com/share?text={{ article.title }} {{ host }}/{{ article.key.id() }}&url=">트위터로↑</a> · <a target="_blank" href="http://www.facebook.com/sharer.php?u={{ host }}/{{ article.key.id() }}">페이스북으로↑</a></p>
+            <p class="info">{% set net = article.url|netloc %}<img src="https://s2.googleusercontent.com/s2/favicons?domain={{ net }}" /><span class="netloc"> {{ net }} ·</span> <span class="date">{{ article.post_time|timesince }} · </span>읽음 {{ article.view }} · <a target="_blank" href="https://twitter.com/share?text={{ article.title|url }} {{ host }}/{{ article.key.id() }}&url=">트위터로↑</a> · <a target="_blank" href="http://www.facebook.com/sharer.php?u={{ host }}/{{ article.key.id() }}">페이스북으로↑</a></p>
         </li>
 </ul>
 
