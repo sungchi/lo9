@@ -63,7 +63,7 @@ def redirect_url(post_id):
 
 def comment(post_id):
     news = ndb.Key("News",post_id).get()
-    return render_template('comment.html',article=news)
+    return render_template('comment.html',article=news,host=HOST)
 
 @app.route('/', defaults={'page': 1})
 @app.route('/page/<int:page>')
