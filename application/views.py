@@ -50,8 +50,7 @@ def netloc(s):
     return urlparse(s).netloc
 
 @app.template_filter('url')
-def url(s):
-    logging.debug(s)
+def url(s): 
     return quote(s.encode('utf8'))
 
 @ndb.toplevel
