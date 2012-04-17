@@ -80,7 +80,6 @@ def new_list(page):
 
 def news_post():
     form = NewsForm()
-    form.url.value = "test"
     if form.validate_on_submit():
         news = News(view = 0, title = form.title.data,url = form.url.data,hot = False)
         try:
