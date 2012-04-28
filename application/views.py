@@ -58,7 +58,7 @@ def redirect_url(post_id):
     news = ndb.Key("News",post_id).get()
     news.view +=1
     news.put_async()
-    return redirect(news.url)
+    return redirect(news.url.encode('utf-8'))
 
 def comment(post_id):
     news = ndb.Key("News",post_id).get()
