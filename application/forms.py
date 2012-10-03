@@ -16,3 +16,6 @@ from flaskext.wtf.html5 import URLField
 class NewsForm(wtf.Form):
     url = URLField('주소',validators=[validators.Required()])
     title = wtf.TextField('제목', validators=[validators.Required()])
+
+class SearchForm(wtf.Form):
+    keyword = wtf.TextField('키워드', validators=[validators.Required()])

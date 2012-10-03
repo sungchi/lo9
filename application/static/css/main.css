@@ -79,6 +79,8 @@ h1.logo a { text-decoration: none; color: #DC322F; }
 #header .link { width: 100px; text-align: right; float: right;  line-height: 3.8em; font-size: 0.7em; }
 #header .link a, #header .link a:visited, #body .bookmarklet a,#body .bookmarklet a:visited, #body .bookmarklet a:hover  { text-decoration: none; color: #3688D8; background: none;}
 
+.search_form { float: right; margin-top: 3px; width: 20%; }
+.search_form input { width: 100%; }
 .link-list { list-style:none; padding: 0; }
 .link-list .title { margin: 8px 0 0; font-size: 0.9em;  overflow:hidden; white-space:nowrap;  text-overflow:ellipsis; }
 #body .link-list .title a { color: #000; }

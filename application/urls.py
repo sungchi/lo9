@@ -20,6 +20,9 @@ app.add_url_rule('/_ah/warmup', 'warmup', view_func=views.warmup)
 # News Post
 app.add_url_rule('/post', 'news_post', view_func=views.news_post, methods=['GET', 'POST'])
 
+# search
+app.add_url_rule('/search', 'search_keyword', view_func=views.search_keyword, methods=['GET'])
+
 # redirect
 app.add_url_rule('/<int:post_id>', 'redirect_url', view_func=views.redirect_url, methods=['GET'])
 

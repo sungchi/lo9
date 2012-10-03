@@ -1,5 +1,11 @@
 {% extends "base.html" %}
-
+ {% block search %}
+        <form class="search_form" action="{{ url_for('search_keyword') }}" method="get" accept-charset="utf-8">
+        <p class="">
+            {{ search_form.keyword(placeholder="검색")|safe }}
+        </p>
+        </form>
+{% endblock %}
 {% block content %}
 <ul class="link-list">
     {% for article in news %}

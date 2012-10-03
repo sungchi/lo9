@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}올리기 :: Inspire Log{% endblock %}
+{% block content %}
+	<h1 id="">검색 결과</h1>
+	<ul class="link-list">
+	    {% for doc in results %}
+	        <li>
+	            <p class="title"><a href="http://{{ host }}/{{ doc.fields[0].value }}">{{ doc.fields[1].value }}</a> <a target="_blank" href="http://{{ host }}/{{ doc.fields[0].value }}">→</a></p><p class="info">{% set net = doc.fields[2].value|netloc %}<img src="https://s2.googleusercontent.com/s2/favicons?domain={{ net }}" /><span class="netloc"> {{ net }} ·</span> <span class="date">{{ doc.fields[3].value|timesince }} · </span><a href="http://www.{{ host }}/{{ doc.fields[0].value }}/c#disqus_thread">댓글</a> · <a target="_blank" href="https://twitter.com/share?text={{ doc.fields[1].value|url }} http://{{ host }}/{{ doc.fields[0].value }}&url=">트위터로↑</a> · <a target="_blank" href="http://www.facebook.com/sharer.php?u=http://{{ host }}/{{ doc.fields[0].value }}">페이스북으로↑</a></p>
+	        </li>
+	    {% else %}
+	        <li>
+	            <p class="title">검색 결과가 없다.</p>
+	        </li>
+	    {% endfor %}
+	</ul>
+{% endblock %}
