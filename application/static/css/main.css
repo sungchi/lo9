@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
 audio, canvas, video { display: inline-block; *display: inline; *zoom: 1; }
 audio:not([controls]) { display: none; }
@@ -69,7 +70,7 @@ td { vertical-align: top; }
 /* ===== Primary Styles ========================================================
    Author: sungchi
    ========================================================================== */
-#lo9 { max-width: 700px; margin: 0 auto; font-family: 'NanumGothicWeb'; color: #333; background: #FDFDFA; padding: 0 0.8em; }
+#lo9 { max-width: 700px; margin: 0 auto; font-family: 'Nanum Gothic', serif; color: #333; background: #FDFDFA; padding: 0 0.8em; }
 #body { min-height: 200px; }
 #body a { text-decoration: none; color: #333; }
 #body a:visited { text-decoration: none; }
