@@ -79,6 +79,7 @@ h1.logo { font-family: 'Seaweed Script'; font-weight: 400; font-size: 2em; text-
 h1.logo a { text-decoration: none; color: #DC322F; }
 #header .link { width: 100px; text-align: right; float: right;  line-height: 3.8em; font-size: 0.7em; }
 #header .link a, #header .link a:visited, #body .bookmarklet a,#body .bookmarklet a:visited, #body .bookmarklet a:hover  { text-decoration: none; color: #3688D8; background: none;}
+.view { font-size: 0.8em; color: #999; float:left; }
 
 .search_form { float: right; margin-top: 3px; width: 20%; }
 .search_form input { width: 100%; }

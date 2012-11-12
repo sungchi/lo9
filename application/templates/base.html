@@ -16,7 +16,7 @@
 </head>
 <body id="lo9">
     <header id="header" class="clearfix">
-        <h1 class="logo"><a href="/">Log</a></h1>
+        <h1 class="logo"><a href="/">Log</a></h1><p class="view">{% if counter %}{{ counter+acc }}{% endif %}</p>
         <p class="link"> <a href="/new">새 글 목록</a> :: <a href="{{ url_for('news_post') }}">올리기</a> </p>
         {% block search %}<!-- header -->{% endblock %}
             {% block header %}<!-- header -->{% endblock %}
