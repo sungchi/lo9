@@ -155,7 +155,7 @@ def hot(post_id):
     return ''
 
 def bookmarklet():
-    return render_template('bookmarklet.html')
+    return render_template('bookmarklet.html',counter=counter.load_and_get_count("view"),acc=ACC)
 
 def warmup():
     """App Engine warmup handler
