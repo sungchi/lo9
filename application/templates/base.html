@@ -2,36 +2,95 @@
 <html lang="ko" class="no-js">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>{% block title %}Lo9{% endblock %}</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>{% block title %}lo9{% endblock %}</title>
     <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="stylesheet" href="/static/css/main.css?v=1" />
     <link href='http://fonts.googleapis.com/css?family=Seaweed+Script' rel='stylesheet' type='text/css'>
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/img/apple-touch-icon-114x114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/img/apple-touch-icon-72x72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="/static/img/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-startup-image" href="/static/img/startup.png">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     {% block style_block %}<!-- Page-level CSS block -->{% endblock %}
     {% block head_script %}<!-- Defer-incapable JavaScript block -->{% endblock %}
+<script>
+(function(d, ua){
+    var theme = 'web';
+    if (ua && /iPhone|iPod|iPad/.test(ua) && parseInt((ua.match(/ OS (\d+)_/i) || [,0])[1], 10) >= 5){
+        theme = 'ios';
+    }
+
+    var head = d.head || d.getElementsByTagName('head')[0];
+
+    var link = d.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/static/css/' + theme + '.css';
+    head.appendChild(link);
+
+})(document, navigator.userAgent);
+
+</script>
+
 </head>
-<body id="lo9">
-    <header id="header" class="clearfix">
-        <h1 class="logo"><a href="/">Log</a></h1><p class="view">{% if counter %}{{ counter+acc }}{% endif %}</p>
-        <p class="link"> <a href="/new">새 글 목록</a> :: <a href="{{ url_for('news_post') }}">올리기</a> </p>
-        {% block search %}<!-- header -->{% endblock %}
-            {% block header %}<!-- header -->{% endblock %}
-    </header>    
-    <div id="body">
-        {% block content %}<!-- main content area -->{% endblock %}
+<body onload="setTimeout(function() {window.scrollTo(0, 1)}, 100)">
+<!--[if lt IE 9]>
+    <p id="outdated-browser">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> to better experience this site.</p>
+<![endif]-->
+<div class="view" id="view-home">
+    <header>
+        {% block header %}<a href="#/about" class="header-button header-button-left button-about"><button>About</button></a>{% endblock %}
+        <h1 style="margin: 0 65px;">{% block navigation %}뉴스 목록{% endblock %}</h1>
+        <a href="/post" class="header-button header-button-icon header-button-right"><button><i class="icon-new">new</i></button></a>
+        
+    </header>
+    <div class="scroll">
+        <section>
+            {% block content %}<!-- main content area -->{% endblock %}
+            <div class="search-ios">
+                {% block search2 %}<!-- search2 -->{% endblock %}
+            </div>
+        </section>
     </div>
-    <footer id="footer">
+</div>
+<div class="view hidden" id="view-about">
+    <header>
+        <a href="#/" class="header-button header-button-left button-close"><button>Close</button></a>
+        <h1>About</h1>
+        <a href="/post" class="header-button header-button-icon header-button-right"><button><i class="icon-new">new</i></button></a>
+    </header>
+    <div class="scroll striped">
+        <section>
+            <div class="grouped-tableview cf">
+                <span id="lo9-icon"></span>
+                <p id="app-desc">lo9는 뉴스를 저장하고 의견을 모으고 빠르게 공유하기 위해 만들어진 앱 입니다. + 버튼을 눌러 로그인 없이 링크를 올리면 운영자가 첫 화면으로 옮겨드립니다.</p>
+            </div>
+            <ul class="grouped-tableview grouped-tableview-links">
+                <li><a href="http://sungchi.github.com/2012/04/07/lo9-kr.html" target="_blank" class="disclosure">자세한 소개</a></li>
+                <li><a href="https://github.com/sungchi/lo9" target="_blank" class="disclosure">GitHub Project</a></li>
+                <li><a href="https://twitter.com/sungchi" target="_blank" class="disclosure">@sungchi</a></li>
+                <li><a href="mailto:sungchi9@gmail.com?subject=lo9 feedback" class="disclosure">Email</a></li>
+            </ul>
+            <div class="bookmarklet">
+                <p>아래 링크를 북마크바에 드래그 하거나(데스크탑 브라우저) 아래 텍스트를 즐겨찾기 주소에 직접 입력해주세요.(스마트폰 브라우저) 아이폰에서는 현재 페이지를 북마크 한 다음 편집을 통해 주소부분에 아래 북마클릿 소스를 넣으시면 됩니다. 그리고, 아이폰 사파리의 "홈 화면에 추가" 기능을 이용하시면 <strong>풀 스크린 모드</strong>로 보실 수 있습니다.</p>
+                <h3><a href="javascript:window.open('http://www.lo9.kr/post?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title))">lo9 북마클릿</a></h3><textarea class="bookmarklet-area">javascript:window.open('http://www.lo9.kr/post?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title))</textarea>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div id="footer">
+            <div class="search">{% block search %}<!-- header -->{% endblock %}</div>
+            <a href="https://github.com/sungchi/lo9">github</a>&nbsp;&nbsp;<a href="http://sungchi.github.com/2012/04/07/lo9-kr.html">소개</a>&nbsp;&nbsp;<a href="/new">모든새글</a>&nbsp;&nbsp;<a href="/admin">관리자</a>
             {% block footer %}<!-- footer -->{% endblock %}
-            <hr />
-            <a href="https://github.com/sungchi/lo9">github</a>&nbsp;&nbsp;<a href="http://sungchi.github.com/2012/04/07/lo9-kr.html">소개</a>&nbsp;&nbsp;<a href="/bookmarklet">북마클릿</a>&nbsp;&nbsp;<a href="/admin">관리자</a>
-    </footer>
+</div>
+
+
     {% block tail_script %}<!-- Defer-capable JavaScript block -->{% endblock %}
 
     <script type="text/javascript">
+
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-30496554-1']);
       _gaq.push(['_trackPageview']);
@@ -40,6 +99,17 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
+
+    $(function() {
+        $('#view-home .button-about').click(function(){
+            $('#view-home').addClass("hidden");
+            $('#view-about').removeClass("hidden")
+        });
+        $('#view-about .button-close').click(function(){
+            $('#view-about').addClass("hidden");
+            $('#view-home').removeClass("hidden")
+        });
+    });
     </script>
 
 </body>

@@ -8,7 +8,7 @@ URL route handlers
 from google.appengine.api import users
 from google.appengine.runtime.apiproxy_errors import CapabilityDisabledError
 
-from flask import render_template, flash, url_for, redirect, request
+from flask import render_template, flash, url_for, redirect, request, jsonify
 from application import app
 
 from models import News
@@ -78,12 +78,19 @@ def home(page):
     news, cursor, more =q.fetch_page(PAGESIZE,offset=PAGESIZE*(page-1))
     return render_template('index.html', search_form=search_form, news=news, page=more and page+1 or 0, host=HOST,counter=counter.load_and_get_count("view"),acc=ACC)
 
+@app.route('/list/<int:page>')
+def list(page):
+    q = News.query(News.hot == True).order(-News.post_time)
+    news, cursor, more =q.fetch_page(PAGESIZE,offset=PAGESIZE*(page-1))
+    return render_template('list.html', news=news, page=more and page+1 or 0, host=HOST)
+
 @app.route('/new', defaults={'page': 1})
 @app.route('/new/page/<int:page>')
 def new_list(page):
+    search_form = SearchForm()
     q = News.query().order(-News.post_time)
     news, cursor, more =q.fetch_page(PAGESIZE,offset=PAGESIZE*(page-1))
-    return render_template('new.html',news=news, page=more and page+1 or 0, host=HOST,counter=counter.load_and_get_count("view"),acc=ACC)    
+    return render_template('new.html',search_form=search_form,news=news, page=more and page+1 or 0, host=HOST,counter=counter.load_and_get_count("view"),acc=ACC)    
 
 def create_doc(id, title, url, post_time):
     return search.Document(
@@ -108,17 +115,19 @@ def news_post():
     return render_template('news_post.html', form=form,title= request.args.get('title'), url= request.args.get('url'),counter=counter.load_and_get_count("view"),acc=ACC)
 
 def search_keyword():
+    search_form = SearchForm()
     logging.info(request.args.get('keyword'))
     results = search.Index(name=_INDEX_NAME).search("\""+request.args.get('keyword')+"\"")
-    return render_template('search.html',results=results, host=HOST,counter=counter.load_and_get_count("view"),acc=ACC)
+    return render_template('search.html',search_form=search_form,results=results, host=HOST,counter=counter.load_and_get_count("view"),acc=ACC)
 
 @app.route('/admin', defaults={'page': 1})
 @app.route('/admin/page/<int:page>')
 @admin_required
 def admin(page):
+    search_form = SearchForm()
     q = News.query().order(-News.post_time)
     news, cursor, more =q.fetch_page(PAGESIZE,offset=PAGESIZE*(page-1))
-    return render_template('admin.html',news=news, page=more and page+1 or 0, host=HOST,counter=counter.load_and_get_count("view"),acc=ACC)    
+    return render_template('admin.html',search_form=search_form,news=news, page=more and page+1 or 0, host=HOST,counter=counter.load_and_get_count("view"),acc=ACC)    
 
 @app.route('/admin/indexing/<int:page>')
 @admin_required

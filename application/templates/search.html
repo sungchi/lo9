@@ -1,12 +1,25 @@
 {% extends "base.html" %}
-{% block title %}올리기 :: Inspire Log{% endblock %}
+{% block title %}올리기 :: lo9{% endblock %}
+{% block navigation %}검색 결과{% endblock %}
+{% block header %}<a href="/" class="header-button header-button-left"><button>Back</button></a>{% endblock %}
+{% block search %}
+        <form class="search_form" action="{{ url_for('search_keyword') }}" method="get" accept-charset="utf-8">
+        <p class="">
+            {{ search_form.keyword(placeholder="검색")|safe }}
+        </p>
+        </form>
+{% endblock %}
+{% block search2 %}
+        <form class="search_form" action="{{ url_for('search_keyword') }}" method="get" accept-charset="utf-8">
+        <p class="">
+            {{ search_form.keyword(placeholder="검색")|safe }}
+        </p>
+        </form>
+{% endblock %}
 {% block content %}
-	<h1 id="">검색 결과</h1>
-	<ul class="link-list">
+	<ul class="tableview tableview-links" id="hnlist">
 	    {% for doc in results %}
-	        <li>
-	            <p class="title"><a href="http://{{ host }}/{{ doc.fields[0].value }}">{{ doc.fields[1].value }}</a> <a target="_blank" href="http://{{ host }}/{{ doc.fields[0].value }}">→</a></p><p class="info">{% set net = doc.fields[2].value|netloc %}<img src="https://s2.googleusercontent.com/s2/favicons?domain={{ net }}" /><span class="netloc"> {{ net }} ·</span> <span class="date">{{ doc.fields[3].value|timesince }} · </span><a href="http://www.{{ host }}/{{ doc.fields[0].value }}/c#disqus_thread">댓글</a> · <a target="_blank" href="https://twitter.com/share?text={{ doc.fields[1].value|url }} http://{{ host }}/{{ doc.fields[0].value }}&url=">트위터로↑</a> · <a target="_blank" href="http://www.facebook.com/sharer.php?u=http://{{ host }}/{{ doc.fields[0].value }}">페이스북으로↑</a></p>
-	        </li>
+	        <li class="post-link"><a href="http://{{ host }}/{{ doc.fields[0].value }}" class="detail-disclosure"><div class="number">{{loop.index}}.</div><div class="story"><b>{{ doc.fields[1].value }}</b><span class="metadata"><span class="link-text">{% set net = doc.fields[2].value|netloc %}<img src="https://s2.googleusercontent.com/s2/favicons?domain={{ net }}" /> {{net}}</span><br><span class="inline-block">{{ doc.fields[3].value|timesince }} </span></span></div></a><a href="http://www.{{ host }}/{{ doc.fields[0].value }}/c" class="detail-disclosure-button"><span></span></a><a class="detail-disclosure-button comment_count" href="http://www.{{ host }}/{{ doc.fields[0].value }}/c#disqus_thread"></a></li>
 	    {% else %}
 	        <li>
 	            <p class="title">검색 결과가 없다.</p>

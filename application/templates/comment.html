@@ -1,12 +1,10 @@
 {% extends "base.html" %}
-{% block title %}{{ article.title }} :: Inspire Log{% endblock %}
+{% block title %}{{ article.title }} :: lo9{% endblock %}
+{% block navigation %}{{ article.title }}{% endblock %}
+{% block header %}<a href="/" class="header-button header-button-left"><button>Back</button></a>{% endblock %}
 {% block content %}
-<ul class="link-list">
-        <li>
-            <p class="title"><a href="{{ host }}/{{ article.key.id() }}">{{ article.title }}</a> <a target="_blank" href="{{ host }}/{{ article.key.id() }}">→</a></p>
-            <p class="info">{% set net = article.url|netloc %}<img src="https://s2.googleusercontent.com/s2/favicons?domain={{ net }}" /><span class="netloc"> {{ net }} ·</span> <span class="date">{{ article.post_time|timesince }} · </span>읽음 {{ article.view }} · <a target="_blank" href="https://twitter.com/share?text={{ article.title|url }} http://{{ host }}/{{ article.key.id() }}&url=">트위터로↑</a> · <a target="_blank" href="http://www.facebook.com/sharer.php?u={{ host }}/{{ article.key.id() }}">페이스북으로↑</a></p>
-        </li>
-</ul>
+
+<div class="post-content"><header><h1><a href="{{ host }}/{{ article.key.id() }}" target="_blank">{{ article.title }}<br>{% set net = article.url|netloc %}<span class="link-text"><img src="https://s2.googleusercontent.com/s2/favicons?domain={{ net }}" /> {{ net }}</span></a></h1><p class="metadata"><span class="inline-block">읽음 {{ article.view }} · </span> <span class="inline-block">{{ article.post_time|timesince }} · </span><a class="external-link" target="_blank" href="https://twitter.com/share?text={{ article.title|url }} http://{{ host }}/{{ article.key.id() }}&url=">트위터</a> · <a class="external-link" target="_blank" href="http://www.facebook.com/sharer.php?u={{ host }}/{{ article.key.id() }}">페이스북</a></p></header></div>
 
 <div id="disqus_thread"></div>
 <script type="text/javascript">

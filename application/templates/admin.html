@@ -1,24 +1,34 @@
 {% extends "base.html" %}
-{% block title %}관리자 :: Inspire Log{% endblock %}
-{% block head_script %}
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+{% block title %}관리자 :: lo9{% endblock %}
+{% block navigation %}관리자{% endblock %}
+{% block header %}<a href="/" class="header-button header-button-left"><button>Back</button></a>{% endblock %}
+{% block search %}
+        <form class="search_form" action="{{ url_for('search_keyword') }}" method="get" accept-charset="utf-8">
+        <p class="">
+            {{ search_form.keyword(placeholder="검색")|safe }}
+        </p>
+        </form>
+{% endblock %}
+{% block search2 %}
+        <form class="search_form" action="{{ url_for('search_keyword') }}" method="get" accept-charset="utf-8">
+        <p class="">
+            {{ search_form.keyword(placeholder="검색")|safe }}
+        </p>
+        </form>
 {% endblock %}
 {% block content %}
-<ul class="link-list">
+<ul class="tableview tableview-links" id="hnlist">
     {% for article in news %}
-        <li>
-            <p class="title"><input name="hot" type="checkbox" onclick="$.ajax('/hot/{{ article.key.id() }}');" value="{{ article.key.id() }}" {% if article.hot %}checked="checked"{% endif %} /> <a href="http://{{ host }}/{{ article.key.id() }}">{{ article.title }}</a> <a target="_blank" href="http://{{ host }}/{{ article.key.id() }}">→</a></p>
-            <p class="info">{% set net = article.url|netloc %}<img src="https://s2.googleusercontent.com/s2/favicons?domain={{ net }}" /><span class="netloc"> {{ net }} ·</span> <span class="date">{{ article.post_time|timesince }} · </span>읽음 {{ article.view }} · <a href="http://www.{{ host }}/{{ article.key.id() }}/c#disqus_thread">댓글</a> · <a target="_blank" href="https://twitter.com/share?text={{ article.title|url }} http://{{ host }}/{{ article.key.id() }}&url=">트위터로↑</a> · <a target="_blank" href="http://www.facebook.com/sharer.php?u=http://{{ host }}/{{ article.key.id() }}">페이스북으로↑</a></p>
-        </li>
+        <li class="post-link"><input name="hot" type="checkbox" onclick="$.ajax('/hot/{{ article.key.id() }}');" value="{{ article.key.id() }}" {% if article.hot %}checked="checked"{% endif %} /><a href="http://{{ host }}/{{ article.key.id() }}" class="detail-disclosure"><div class="story"><b>{{ article.title }}</b><span class="metadata"><span class="link-text">{% set net = article.url|netloc %}<img src="https://s2.googleusercontent.com/s2/favicons?domain={{ net }}" /> {{net}}</span><br><span class="inline-block">{{ article.post_time|timesince }} · 읽음 {{ article.view }} </span></span></div></a><a href="http://www.{{ host }}/{{ article.key.id() }}/c" class="detail-disclosure-button"><span></span></a><a class="detail-disclosure-button comment_count" href="http://www.{{ host }}/{{ article.key.id() }}/c#disqus_thread"></a></li>
     {% else %}
         <li>
             <p class="title">글이 없다.</p>
         </li>
     {% endfor %}
+    {% if page %}
+    <li id="more"><a class="more-link" id="{{page}}">더보기…</a></li>
+    {% endif %}
 </ul>
-{% if page %}
-<a href="/admin/page/{{page}}">다음페이지</a>
-{% endif %}
 {% endblock %}
 
 {% block tail_script %}
@@ -30,5 +40,28 @@
         s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
+
+$(function() {
+        $('.more-link').live("click",function() {
+        var last_msg_id = $(this).attr("id");
+        if(last_msg_id!='end'){
+        $.ajax({
+        type: "GET",
+        url: "./list/"+last_msg_id,
+        beforeSend:  function() {
+        $('a.more-link').html('<img src="/static/img/loader.gif" />');
+        },
+        success: function(html){
+            $("#more").remove();
+        $("ul.tableview").append(html);
+
+        }
+        });
+          
+        }
+
+        return false;
+        });
+});
 </script>
 {% endblock %}

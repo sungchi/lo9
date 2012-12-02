@@ -1,0 +1,8 @@
+{% block content %}
+    {% for article in news %}
+        <li class="post-link"><a href="http://{{ host }}/{{ article.key.id() }}" class="detail-disclosure"><div class="number">{{25*(page-2)+loop.index}}.</div><div class="story"><b>{{ article.title }}</b><span class="metadata"><span class="link-text">{% set net = article.url|netloc %}<img src="https://s2.googleusercontent.com/s2/favicons?domain={{ net }}" /> {{net}}</span><br><span class="inline-block">{{ article.post_time|timesince }} · 읽음 {{ article.view }} </span></span></div></a><a href="http://www.{{ host }}/{{ article.key.id() }}/c" class="detail-disclosure-button"><span></span></a><a class="detail-disclosure-button comment_count" href="http://www.{{ host }}/{{ article.key.id() }}/c#disqus_thread"></a></li>
+    {% endfor %}
+    {% if page %}
+    <li id="more"><a class="more-link" id="{{page}}">더보기…</a></li>
+    {% endif %}
+{% endblock %}
